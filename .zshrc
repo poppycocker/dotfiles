@@ -1,4 +1,12 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # (d) is default on
+
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$HOME/shellfunc:$PATH
+export PATH=$HOME/flutter/bin:$PATH
+
+export LOG_LEVEL=DEBUG
 
 # ------------------------------
 # General Settings
@@ -39,7 +47,7 @@ setopt hist_ignore_all_dups  # 入力したコマンドが履歴に含まれる�
 setopt share_history      # 他のシェルのヒストリをリアルタイムで共有する
 setopt hist_reduce_blanks # 余分なスペースを削除してヒストリに保存する
 setopt hist_ignore_space  # コマンドがスペースで始まる場合、コマンド履歴に追加しない
-
+setopt nonomatch
 
 
 # マッチしたコマンドのヒストリを表示できるようにする
@@ -124,8 +132,13 @@ alias lf="ls -F"
 alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
+alias awsp="source _awsp"
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
+alias py37="/usr/local/opt/python@3.7/bin/python3"
 
 # cdコマンド実行後、lsを実行する
 function cd() {
   builtin cd $@ && ls;
 }
+
+eval "$(starship init zsh)"
