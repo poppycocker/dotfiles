@@ -1,12 +1,18 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+
 # (d) is default on
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$HOME/shellfunc:$PATH
 export PATH=$HOME/flutter/bin:$PATH
+export PATH=$HOME/.npm-global/bin:$PATH
+export VOLTA_HOME="$HOME/.volta"
+export PATH=$VOLTA_HOME/bin:$PATH
+export PATH="$(go env GOPATH)/bin:$PATH"
 
 export LOG_LEVEL=DEBUG
+export workspaceFolder="$HOME/git_repos/luup-server"
 
 # ------------------------------
 # General Settings
@@ -135,6 +141,7 @@ alias df="df -h"
 alias awsp="source _awsp"
 alias ibrew="arch -x86_64 /usr/local/bin/brew"
 alias py37="/usr/local/opt/python@3.7/bin/python3"
+alias grh='git fetch origin && git reset --hard origin/$(git symbolic-ref --short HEAD)'
 
 # cdコマンド実行後、lsを実行する
 function cd() {
@@ -142,3 +149,23 @@ function cd() {
 }
 
 eval "$(starship init zsh)"
+
+source /Users/ryoichi/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ryoichi/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ryoichi/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ryoichi/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ryoichi/google-cloud-sdk/completion.zsh.inc'; fi
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+
+# cmux 環境下であれば、プログラム名を ghostty として報告する
+if [ "$TERM_PROGRAM" = "cmux" ]; then
+    export TERM_PROGRAM=ghostty
+fi
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
